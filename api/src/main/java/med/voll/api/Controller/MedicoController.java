@@ -4,6 +4,7 @@ package med.voll.api.Controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.Medico.*;
+import med.voll.api.medico.DadosDetalhamentoMedico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,6 +57,14 @@ public class MedicoController {
         var medico  = repository.getReferenceById(id);
         medico.excluir();
         return ResponseEntity.noContent().build();
+
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id) {
+        var medico  = repository.getReferenceById(id);
+
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
 
     }
 }
