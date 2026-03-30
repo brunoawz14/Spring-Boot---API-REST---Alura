@@ -1,8 +1,6 @@
-package med.voll.api.Paciente;
+package med.voll.api.domain.Paciente;
 
-import med.voll.api.Endereco.Endereco;
-
-import med.voll.api.Medico.Paciente;
+import med.voll.api.domain.Endereco.Endereco;
 
 public record DadosDetalhamentoPaciente(String nome, String email, String telefone, String cpf, Endereco endereco) {
     public DadosDetalhamentoPaciente(Paciente paciente) {

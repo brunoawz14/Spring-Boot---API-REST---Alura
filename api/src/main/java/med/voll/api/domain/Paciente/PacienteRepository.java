@@ -1,8 +1,5 @@
-package med.voll.api.Paciente;
+package med.voll.api.domain.Paciente;
 
-import aj.org.objectweb.asm.commons.Remapper;
-import med.voll.api.Medico.Medico;
-import med.voll.api.Medico.Paciente;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -2,15 +2,14 @@ package med.voll.api.Controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.Medico.DadosAtualizacaoMedico;
-import med.voll.api.Medico.DadosListagemMedico;
-import med.voll.api.Medico.Paciente;
-import med.voll.api.Paciente.*;
+import med.voll.api.domain.Paciente.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("pacientes")
@@ -21,7 +20,7 @@ public class PacienteController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroPaciente dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroPacientes dados, UriComponentsBuilder uriBuilder) {
         var paciente = new Paciente(dados);
         repository.save(paciente);
 
