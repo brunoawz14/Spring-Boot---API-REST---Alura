@@ -1,4 +1,4 @@
-package med.voll.api.infra;
+package med.voll.api.infra.exception;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.EntityNotFoundException;
