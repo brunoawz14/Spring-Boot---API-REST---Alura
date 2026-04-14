@@ -1,5 +1,6 @@
 package med.voll.api.infra.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,11 +12,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
 @EnableWebSecurity // anotação de configuração Security
 public class SecurityConfiguration {
+
+    @Autowired
+    private SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,8 +45,11 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated()
                 )
 
+                // Adiciona o filtro JWT antes do filtro padrão do Spring
+                // Garante que o token seja validado primeiro
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+
                 // Constrói e retorna o objeto SecurityFilterChain
-                // com todas as configurações definidas acima
                 .build();
     }
 
