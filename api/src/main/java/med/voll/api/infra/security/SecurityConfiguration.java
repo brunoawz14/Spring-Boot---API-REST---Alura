@@ -2,6 +2,7 @@ package med.voll.api.infra.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,8 +19,29 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable())
+        return http
+
+                // Desativa a proteção CSRF (Cross-Site Request Forgery)
+                // Não é necessária pois a API é stateless (sem sessão)
+                .csrf(csrf -> csrf.disable())
+
+                // Define que a aplicação não vai criar ou usar sessões HTTP
+                // Cada requisição deve se autenticar de forma independente via token JWT
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                // Define as regras de autorização para as rotas da aplicação
+                .authorizeHttpRequests(req -> req
+
+                        // Permite acesso público à rota de login (POST /login)
+                        // Qualquer usuário pode acessar sem estar autenticado
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+
+                        // Todas as outras rotas exigem autenticação
+                        .anyRequest().authenticated()
+                )
+
+                // Constrói e retorna o objeto SecurityFilterChain
+                // com todas as configurações definidas acima
                 .build();
     }
 
