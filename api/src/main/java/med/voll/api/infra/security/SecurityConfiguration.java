@@ -40,6 +40,7 @@ public class SecurityConfiguration {
                         // Permite acesso público à rota de login (POST /login)
                         // Qualquer usuário pode acessar sem estar autenticado
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Permite acesso público à documentação da API
 
                         // Todas as outras rotas exigem autenticação
                         .anyRequest().authenticated()
