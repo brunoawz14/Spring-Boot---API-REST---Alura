@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("medicos")
+@RequestMapping("/medicos")
 @SecurityRequirement(name = "bearer-key")
 public class MedicoController {
 
